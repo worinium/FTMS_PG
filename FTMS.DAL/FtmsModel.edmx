@@ -1,0 +1,1521 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ftmsdbModel.Store" Provider="Npgsql" ProviderManifestToken="14.1" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ftms_census">
+          <Key>
+            <PropertyRef Name="census_id" />
+          </Key>
+          <Property Name="census_id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="census_date" Type="timestamp" Nullable="false" />
+          <Property Name="location_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="file_id" Type="int4" Nullable="false" />
+          <Property Name="logged_user" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="pc_name" Type="varchar" MaxLength="90" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ftms_file">
+          <Key>
+            <PropertyRef Name="file_id" />
+          </Key>
+          <Property Name="file_id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="file_number" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="owner_name" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="cofo_exist" Type="bool" Nullable="false" />
+          <Property Name="rofo_exist" Type="bool" Nullable="false" />
+          <Property Name="phone_number" Type="varchar" MaxLength="255" />
+          <Property Name="app_date" Type="timestamp" />
+          <Property Name="remark" Type="text" />
+          <Property Name="register_number" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="rofo_date" Type="timestamp" />
+          <Property Name="commencement_date" Type="timestamp" />
+          <Property Name="file_alias" Type="varchar" MaxLength="90" />
+          <Property Name="lga_code" Type="varchar" MaxLength="50" />
+          <Property Name="rack_number" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="current_transaction" Type="int4" />
+          <Property Name="created_by" Type="varchar" MaxLength="50" />
+          <Property Name="created_date" Type="timestamp" />
+          <Property Name="modified_by" Type="varchar" MaxLength="50" />
+          <Property Name="modified_date" Type="timestamp" />
+        </EntityType>
+        <EntityType Name="ftms_file_request">
+          <Key>
+            <PropertyRef Name="request_id" />
+          </Key>
+          <Property Name="request_id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="requestor_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="request_purpose" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="request_date" Type="timestamp" Nullable="false" />
+          <Property Name="requestor_pcname" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="requestor_logged_user" Type="varchar" MaxLength="90" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ftms_locations">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+          <Property Name="positions" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ftms_setting">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ftms_sticker">
+          <Key>
+            <PropertyRef Name="sticker_id" />
+          </Key>
+          <Property Name="sticker_id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="file_id" Type="int4" Nullable="false" />
+          <Property Name="qr_full_text" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_date" Type="timestamp" Nullable="false" />
+          <Property Name="logged_user" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ftms_transaction">
+          <Key>
+            <PropertyRef Name="transaction_id" />
+          </Key>
+          <Property Name="transaction_id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="file_id" Type="int4" Nullable="false" />
+          <Property Name="from_location" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="to_location" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="transaction_date" Type="timestamp" Nullable="false" />
+          <Property Name="file_condition" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="number_page" Type="int4" Nullable="false" />
+          <Property Name="logged_user" Type="varchar" MaxLength="90" />
+          <Property Name="pc_name" Type="varchar" MaxLength="90" />
+          <Property Name="tracking_remark" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="lkp_file_condition">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+          <Property Name="positions" Type="int4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="request_details">
+          <Key>
+            <PropertyRef Name="request_id" />
+            <PropertyRef Name="file_id" />
+          </Key>
+          <Property Name="request_id" Type="int4" Nullable="false" />
+          <Property Name="file_id" Type="int4" Nullable="false" />
+          <Property Name="note" Type="text" />
+        </EntityType>
+        <EntityType Name="allocation_status">
+          <Key>
+            <PropertyRef Name="mrcode" />
+          </Key>
+          <Property Name="mrcode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="100" />
+          <Property Name="active" Type="bool" />
+          <Property Name="request_category_type" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="appuser">
+          <Key>
+            <PropertyRef Name="appuser_id" />
+          </Key>
+          <Property Name="appuser_id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="60" />
+          <Property Name="last_name" Type="varchar" MaxLength="60" />
+          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+          <Property Name="created_by" Type="int4" />
+          <Property Name="created_date" Type="timestamp" Nullable="false" />
+          <Property Name="modified_by" Type="int4" />
+          <Property Name="modified_date" Type="timestamp" Nullable="false" />
+        </EntityType>
+        <EntityType Name="file">
+          <Key>
+            <PropertyRef Name="file_id" />
+          </Key>
+          <Property Name="file_id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="file_number" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="auto_generated" Type="bool" Nullable="false" />
+          <Property Name="file_alias" Type="varchar" MaxLength="90" />
+          <Property Name="file_type" Type="int4" Nullable="false" />
+          <Property Name="owner_id" Type="int4" />
+          <Property Name="file_status_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="property_no" Type="varchar" MaxLength="20" />
+          <Property Name="property_size" Type="numeric" Precision="18" Scale="3" />
+          <Property Name="location_code" Type="varchar" MaxLength="20" />
+          <Property Name="landuse_code" Type="varchar" MaxLength="20" />
+          <Property Name="landpurpose_code" Type="varchar" MaxLength="20" />
+          <Property Name="recordation" Type="timestamp" Nullable="false" />
+          <Property Name="active" Type="bool" />
+          <Property Name="leaseyear_code" Type="int4" />
+          <Property Name="rofo_exists" Type="bool" />
+          <Property Name="cofo_exists" Type="bool" />
+          <Property Name="modified_by" Type="int4" Nullable="false" />
+          <Property Name="allocation_status" Type="varchar" MaxLength="20" />
+          <Property Name="transaction_status" Type="varchar" MaxLength="20" />
+          <Property Name="other_claimants_code" Type="int4" />
+          <Property Name="file_number_only" Type="int4" />
+        </EntityType>
+        <EntityType Name="file_status">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="100" />
+          <Property Name="active" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="file_type">
+          <Key>
+            <PropertyRef Name="file_type_id" />
+          </Key>
+          <Property Name="file_type_id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="file_type_code" Type="varchar" MaxLength="20" />
+          <Property Name="file_classification_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
+          <Property Name="min_number" Type="int4" />
+          <Property Name="max_number" Type="int4" />
+          <Property Name="auto_generated" Type="bool" Nullable="false" />
+          <Property Name="current_number" Type="int4" />
+          <Property Name="number_format" Type="varchar" MaxLength="100" />
+          <Property Name="min_size" Type="int4" Nullable="false" />
+          <Property Name="certificate_code" Type="int4" />
+        </EntityType>
+        <EntityType Name="lkp_file_classification">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lkp_state">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="location_type_upper">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="state" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="logger">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="createdate" Type="timestamp" />
+          <Property Name="machinename" Type="varchar" MaxLength="50" />
+          <Property Name="message" Type="varchar" MaxLength="1000" />
+          <Property Name="category" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="party">
+          <Key>
+            <PropertyRef Name="party_id" />
+          </Key>
+          <Property Name="party_id" Type="int4" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="appuser_created_by_fkey">
+          <End Role="appuser" Type="Self.appuser" Multiplicity="0..1" />
+          <End Role="appuser1" Type="Self.appuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="appuser">
+              <PropertyRef Name="appuser_id" />
+            </Principal>
+            <Dependent Role="appuser1">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="appuser_modified_by_fkey">
+          <End Role="appuser" Type="Self.appuser" Multiplicity="0..1" />
+          <End Role="appuser1" Type="Self.appuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="appuser">
+              <PropertyRef Name="appuser_id" />
+            </Principal>
+            <Dependent Role="appuser1">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_allocation_status_fkey">
+          <End Role="allocation_status" Type="Self.allocation_status" Multiplicity="0..1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="allocation_status">
+              <PropertyRef Name="mrcode" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="allocation_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_file_status_code_fkey">
+          <End Role="file_status" Type="Self.file_status" Multiplicity="1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="file_status">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="file_status_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_file_type_fkey">
+          <End Role="file_type" Type="Self.file_type" Multiplicity="1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="file_type">
+              <PropertyRef Name="file_type_id" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="file_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_modified_by_fkey">
+          <End Role="appuser" Type="Self.appuser" Multiplicity="1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="appuser">
+              <PropertyRef Name="appuser_id" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_owner_id_fkey">
+          <End Role="party" Type="Self.party" Multiplicity="0..1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="party">
+              <PropertyRef Name="party_id" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_transaction_status_fkey">
+          <End Role="allocation_status" Type="Self.allocation_status" Multiplicity="0..1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="allocation_status">
+              <PropertyRef Name="mrcode" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="transaction_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_type_file_classification_code_fkey">
+          <End Role="lkp_file_classification" Type="Self.lkp_file_classification" Multiplicity="1" />
+          <End Role="file_type" Type="Self.file_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lkp_file_classification">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="file_type">
+              <PropertyRef Name="file_classification_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_census_file_id_fkey">
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="1" />
+          <End Role="ftms_census" Type="Self.ftms_census" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_file">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ftms_census">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_census_location_code_fkey">
+          <End Role="ftms_locations" Type="Self.ftms_locations" Multiplicity="1" />
+          <End Role="ftms_census" Type="Self.ftms_census" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_locations">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="ftms_census">
+              <PropertyRef Name="location_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_file_current_transaction_fkey">
+          <End Role="ftms_transaction" Type="Self.ftms_transaction" Multiplicity="0..1" />
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_transaction">
+              <PropertyRef Name="transaction_id" />
+            </Principal>
+            <Dependent Role="ftms_file">
+              <PropertyRef Name="current_transaction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_file_lga_code_fkey">
+          <End Role="location_type_upper" Type="Self.location_type_upper" Multiplicity="0..1" />
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location_type_upper">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="ftms_file">
+              <PropertyRef Name="lga_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_sticker_file_id_fkey">
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="1" />
+          <End Role="ftms_sticker" Type="Self.ftms_sticker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_file">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ftms_sticker">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_transaction_file_condition_fkey">
+          <End Role="lkp_file_condition" Type="Self.lkp_file_condition" Multiplicity="1" />
+          <End Role="ftms_transaction" Type="Self.ftms_transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lkp_file_condition">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="ftms_transaction">
+              <PropertyRef Name="file_condition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_transaction_file_id_fkey">
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="1" />
+          <End Role="ftms_transaction" Type="Self.ftms_transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_file">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ftms_transaction">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_transaction_from_location_fkey">
+          <End Role="ftms_locations" Type="Self.ftms_locations" Multiplicity="1" />
+          <End Role="ftms_transaction" Type="Self.ftms_transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_locations">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="ftms_transaction">
+              <PropertyRef Name="from_location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_transaction_to_location_fkey">
+          <End Role="ftms_locations" Type="Self.ftms_locations" Multiplicity="1" />
+          <End Role="ftms_transaction" Type="Self.ftms_transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_locations">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="ftms_transaction">
+              <PropertyRef Name="to_location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="location_type_upper_state_fkey">
+          <End Role="lkp_state" Type="Self.lkp_state" Multiplicity="1" />
+          <End Role="location_type_upper" Type="Self.location_type_upper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lkp_state">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="location_type_upper">
+              <PropertyRef Name="state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_details_file_id_fkey">
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="1" />
+          <End Role="request_details" Type="Self.request_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_file">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="request_details">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_details_request_id_fkey">
+          <End Role="ftms_file_request" Type="Self.ftms_file_request" Multiplicity="1" />
+          <End Role="request_details" Type="Self.request_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_file_request">
+              <PropertyRef Name="request_id" />
+            </Principal>
+            <Dependent Role="request_details">
+              <PropertyRef Name="request_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ftmsdbModelStoreContainer">
+          <EntitySet Name="ftms_census" EntityType="Self.ftms_census" Schema="ftms" store:Type="Tables" />
+          <EntitySet Name="ftms_file" EntityType="Self.ftms_file" Schema="ftms" store:Type="Tables" />
+          <EntitySet Name="ftms_file_request" EntityType="Self.ftms_file_request" Schema="ftms" store:Type="Tables" />
+          <EntitySet Name="ftms_locations" EntityType="Self.ftms_locations" Schema="ftms" store:Type="Tables" />
+          <EntitySet Name="ftms_setting" EntityType="Self.ftms_setting" Schema="ftms" store:Type="Tables" />
+          <EntitySet Name="ftms_sticker" EntityType="Self.ftms_sticker" Schema="ftms" store:Type="Tables" />
+          <EntitySet Name="ftms_transaction" EntityType="Self.ftms_transaction" Schema="ftms" store:Type="Tables" />
+          <EntitySet Name="lkp_file_condition" EntityType="Self.lkp_file_condition" Schema="ftms" store:Type="Tables" />
+          <EntitySet Name="request_details" EntityType="Self.request_details" Schema="ftms" store:Type="Tables" />
+          <EntitySet Name="allocation_status" EntityType="Self.allocation_status" Schema="public" store:Type="Tables" />
+          <EntitySet Name="appuser" EntityType="Self.appuser" Schema="public" store:Type="Tables" />
+          <EntitySet Name="file" EntityType="Self.file" Schema="public" store:Type="Tables" />
+          <EntitySet Name="file_status" EntityType="Self.file_status" Schema="public" store:Type="Tables" />
+          <EntitySet Name="file_type" EntityType="Self.file_type" Schema="public" store:Type="Tables" />
+          <EntitySet Name="lkp_file_classification" EntityType="Self.lkp_file_classification" Schema="public" store:Type="Tables" />
+          <EntitySet Name="lkp_state" EntityType="Self.lkp_state" Schema="public" store:Type="Tables" />
+          <EntitySet Name="location_type_upper" EntityType="Self.location_type_upper" Schema="public" store:Type="Tables" />
+          <EntitySet Name="logger" EntityType="Self.logger" Schema="public" store:Type="Tables" />
+          <EntitySet Name="party" EntityType="Self.party" Schema="public" store:Type="Tables" />
+          <EntitySet Name="setting" EntityType="Self.setting" Schema="public" store:Type="Tables" />
+          <AssociationSet Name="appuser_created_by_fkey" Association="Self.appuser_created_by_fkey">
+            <End Role="appuser" EntitySet="appuser" />
+            <End Role="appuser1" EntitySet="appuser" />
+          </AssociationSet>
+          <AssociationSet Name="appuser_modified_by_fkey" Association="Self.appuser_modified_by_fkey">
+            <End Role="appuser" EntitySet="appuser" />
+            <End Role="appuser1" EntitySet="appuser" />
+          </AssociationSet>
+          <AssociationSet Name="file_allocation_status_fkey" Association="Self.file_allocation_status_fkey">
+            <End Role="allocation_status" EntitySet="allocation_status" />
+            <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="file_file_status_code_fkey" Association="Self.file_file_status_code_fkey">
+            <End Role="file_status" EntitySet="file_status" />
+            <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="file_file_type_fkey" Association="Self.file_file_type_fkey">
+            <End Role="file_type" EntitySet="file_type" />
+            <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="file_modified_by_fkey" Association="Self.file_modified_by_fkey">
+            <End Role="appuser" EntitySet="appuser" />
+            <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="file_owner_id_fkey" Association="Self.file_owner_id_fkey">
+            <End Role="party" EntitySet="party" />
+            <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="file_transaction_status_fkey" Association="Self.file_transaction_status_fkey">
+            <End Role="allocation_status" EntitySet="allocation_status" />
+            <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="file_type_file_classification_code_fkey" Association="Self.file_type_file_classification_code_fkey">
+            <End Role="lkp_file_classification" EntitySet="lkp_file_classification" />
+            <End Role="file_type" EntitySet="file_type" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_census_file_id_fkey" Association="Self.ftms_census_file_id_fkey">
+            <End Role="ftms_file" EntitySet="ftms_file" />
+            <End Role="ftms_census" EntitySet="ftms_census" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_census_location_code_fkey" Association="Self.ftms_census_location_code_fkey">
+            <End Role="ftms_locations" EntitySet="ftms_locations" />
+            <End Role="ftms_census" EntitySet="ftms_census" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_file_current_transaction_fkey" Association="Self.ftms_file_current_transaction_fkey">
+            <End Role="ftms_transaction" EntitySet="ftms_transaction" />
+            <End Role="ftms_file" EntitySet="ftms_file" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_file_lga_code_fkey" Association="Self.ftms_file_lga_code_fkey">
+            <End Role="location_type_upper" EntitySet="location_type_upper" />
+            <End Role="ftms_file" EntitySet="ftms_file" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_sticker_file_id_fkey" Association="Self.ftms_sticker_file_id_fkey">
+            <End Role="ftms_file" EntitySet="ftms_file" />
+            <End Role="ftms_sticker" EntitySet="ftms_sticker" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_transaction_file_condition_fkey" Association="Self.ftms_transaction_file_condition_fkey">
+            <End Role="lkp_file_condition" EntitySet="lkp_file_condition" />
+            <End Role="ftms_transaction" EntitySet="ftms_transaction" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_transaction_file_id_fkey" Association="Self.ftms_transaction_file_id_fkey">
+            <End Role="ftms_file" EntitySet="ftms_file" />
+            <End Role="ftms_transaction" EntitySet="ftms_transaction" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_transaction_from_location_fkey" Association="Self.ftms_transaction_from_location_fkey">
+            <End Role="ftms_locations" EntitySet="ftms_locations" />
+            <End Role="ftms_transaction" EntitySet="ftms_transaction" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_transaction_to_location_fkey" Association="Self.ftms_transaction_to_location_fkey">
+            <End Role="ftms_locations" EntitySet="ftms_locations" />
+            <End Role="ftms_transaction" EntitySet="ftms_transaction" />
+          </AssociationSet>
+          <AssociationSet Name="location_type_upper_state_fkey" Association="Self.location_type_upper_state_fkey">
+            <End Role="lkp_state" EntitySet="lkp_state" />
+            <End Role="location_type_upper" EntitySet="location_type_upper" />
+          </AssociationSet>
+          <AssociationSet Name="request_details_file_id_fkey" Association="Self.request_details_file_id_fkey">
+            <End Role="ftms_file" EntitySet="ftms_file" />
+            <End Role="request_details" EntitySet="request_details" />
+          </AssociationSet>
+          <AssociationSet Name="request_details_request_id_fkey" Association="Self.request_details_request_id_fkey">
+            <End Role="ftms_file_request" EntitySet="ftms_file_request" />
+            <End Role="request_details" EntitySet="request_details" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ftmsdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ftms_census">
+          <Key>
+            <PropertyRef Name="census_id" />
+          </Key>
+          <Property Name="census_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="census_date" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="location_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="file_id" Type="Int32" Nullable="false" />
+          <Property Name="logged_user" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pc_name" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ftms_file" Relationship="Self.ftms_census_file_id_fkey" FromRole="ftms_census" ToRole="ftms_file" />
+          <NavigationProperty Name="ftms_locations" Relationship="Self.ftms_census_location_code_fkey" FromRole="ftms_census" ToRole="ftms_locations" />
+        </EntityType>
+        <EntityType Name="ftms_file">
+          <Key>
+            <PropertyRef Name="file_id" />
+          </Key>
+          <Property Name="file_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="file_number" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="owner_name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cofo_exist" Type="Boolean" Nullable="false" />
+          <Property Name="rofo_exist" Type="Boolean" Nullable="false" />
+          <Property Name="phone_number" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="app_date" Type="DateTime" Precision="6" />
+          <Property Name="remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="register_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rofo_date" Type="DateTime" Precision="6" />
+          <Property Name="commencement_date" Type="DateTime" Precision="6" />
+          <Property Name="file_alias" Type="String" MaxLength="90" FixedLength="false" Unicode="true" />
+          <Property Name="lga_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rack_number" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="current_transaction" Type="Int32" />
+          <Property Name="created_by" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="created_date" Type="DateTime" Precision="6" />
+          <Property Name="modified_by" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="modified_date" Type="DateTime" Precision="6" />
+          <NavigationProperty Name="ftms_census" Relationship="Self.ftms_census_file_id_fkey" FromRole="ftms_file" ToRole="ftms_census" />
+          <NavigationProperty Name="ftms_transaction" Relationship="Self.ftms_file_current_transaction_fkey" FromRole="ftms_file" ToRole="ftms_transaction" />
+          <NavigationProperty Name="location_type_upper" Relationship="Self.ftms_file_lga_code_fkey" FromRole="ftms_file" ToRole="location_type_upper" />
+          <NavigationProperty Name="ftms_sticker" Relationship="Self.ftms_sticker_file_id_fkey" FromRole="ftms_file" ToRole="ftms_sticker" />
+          <NavigationProperty Name="ftms_transaction1" Relationship="Self.ftms_transaction_file_id_fkey" FromRole="ftms_file" ToRole="ftms_transaction" />
+          <NavigationProperty Name="request_details" Relationship="Self.request_details_file_id_fkey" FromRole="ftms_file" ToRole="request_details" />
+        </EntityType>
+        <EntityType Name="ftms_file_request">
+          <Key>
+            <PropertyRef Name="request_id" />
+          </Key>
+          <Property Name="request_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="requestor_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="request_purpose" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="request_date" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="requestor_pcname" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="requestor_logged_user" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="request_details" Relationship="Self.request_details_request_id_fkey" FromRole="ftms_file_request" ToRole="request_details" />
+        </EntityType>
+        <EntityType Name="ftms_locations">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="positions" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ftms_census" Relationship="Self.ftms_census_location_code_fkey" FromRole="ftms_locations" ToRole="ftms_census" />
+          <NavigationProperty Name="ftms_transaction" Relationship="Self.ftms_transaction_from_location_fkey" FromRole="ftms_locations" ToRole="ftms_transaction" />
+          <NavigationProperty Name="ftms_transaction1" Relationship="Self.ftms_transaction_to_location_fkey" FromRole="ftms_locations" ToRole="ftms_transaction" />
+        </EntityType>
+        <EntityType Name="ftms_setting">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ftms_sticker">
+          <Key>
+            <PropertyRef Name="sticker_id" />
+          </Key>
+          <Property Name="sticker_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="file_id" Type="Int32" Nullable="false" />
+          <Property Name="qr_full_text" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="logged_user" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ftms_file" Relationship="Self.ftms_sticker_file_id_fkey" FromRole="ftms_sticker" ToRole="ftms_file" />
+        </EntityType>
+        <EntityType Name="ftms_transaction">
+          <Key>
+            <PropertyRef Name="transaction_id" />
+          </Key>
+          <Property Name="transaction_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="file_id" Type="Int32" Nullable="false" />
+          <Property Name="from_location" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="to_location" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="transaction_date" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="file_condition" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="number_page" Type="Int32" Nullable="false" />
+          <Property Name="logged_user" Type="String" MaxLength="90" FixedLength="false" Unicode="true" />
+          <Property Name="pc_name" Type="String" MaxLength="90" FixedLength="false" Unicode="true" />
+          <Property Name="tracking_remark" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ftms_file" Relationship="Self.ftms_file_current_transaction_fkey" FromRole="ftms_transaction" ToRole="ftms_file" />
+          <NavigationProperty Name="ftms_file1" Relationship="Self.ftms_transaction_file_id_fkey" FromRole="ftms_transaction" ToRole="ftms_file" />
+          <NavigationProperty Name="ftms_locations" Relationship="Self.ftms_transaction_from_location_fkey" FromRole="ftms_transaction" ToRole="ftms_locations" />
+          <NavigationProperty Name="ftms_locations1" Relationship="Self.ftms_transaction_to_location_fkey" FromRole="ftms_transaction" ToRole="ftms_locations" />
+          <NavigationProperty Name="lkp_file_condition" Relationship="Self.ftms_transaction_file_condition_fkey" FromRole="ftms_transaction" ToRole="lkp_file_condition" />
+        </EntityType>
+        <EntityType Name="lkp_file_condition">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="positions" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ftms_transaction" Relationship="Self.ftms_transaction_file_condition_fkey" FromRole="lkp_file_condition" ToRole="ftms_transaction" />
+        </EntityType>
+        <EntityType Name="request_details">
+          <Key>
+            <PropertyRef Name="request_id" />
+            <PropertyRef Name="file_id" />
+          </Key>
+          <Property Name="request_id" Type="Int32" Nullable="false" />
+          <Property Name="file_id" Type="Int32" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ftms_file" Relationship="Self.request_details_file_id_fkey" FromRole="request_details" ToRole="ftms_file" />
+          <NavigationProperty Name="ftms_file_request" Relationship="Self.request_details_request_id_fkey" FromRole="request_details" ToRole="ftms_file_request" />
+        </EntityType>
+        <EntityType Name="allocation_status">
+          <Key>
+            <PropertyRef Name="mrcode" />
+          </Key>
+          <Property Name="mrcode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="request_category_type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="files" Relationship="Self.file_allocation_status_fkey" FromRole="allocation_status" ToRole="file" />
+          <NavigationProperty Name="files1" Relationship="Self.file_transaction_status_fkey" FromRole="allocation_status" ToRole="file" />
+        </EntityType>
+        <EntityType Name="appuser">
+          <Key>
+            <PropertyRef Name="appuser_id" />
+          </Key>
+          <Property Name="appuser_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Int32" />
+          <Property Name="created_date" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="modified_by" Type="Int32" />
+          <Property Name="modified_date" Type="DateTime" Precision="6" Nullable="false" />
+          <NavigationProperty Name="appuser1" Relationship="Self.appuser_created_by_fkey" FromRole="appuser" ToRole="appuser1" />
+          <NavigationProperty Name="appuser2" Relationship="Self.appuser_created_by_fkey" FromRole="appuser1" ToRole="appuser" />
+          <NavigationProperty Name="appuser11" Relationship="Self.appuser_modified_by_fkey" FromRole="appuser" ToRole="appuser1" />
+          <NavigationProperty Name="appuser3" Relationship="Self.appuser_modified_by_fkey" FromRole="appuser1" ToRole="appuser" />
+          <NavigationProperty Name="files" Relationship="Self.file_modified_by_fkey" FromRole="appuser" ToRole="file" />
+        </EntityType>
+        <EntityType Name="file">
+          <Key>
+            <PropertyRef Name="file_id" />
+          </Key>
+          <Property Name="file_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="file_number" Type="String" MaxLength="90" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="auto_generated" Type="Boolean" Nullable="false" />
+          <Property Name="file_alias" Type="String" MaxLength="90" FixedLength="false" Unicode="true" />
+          <Property Name="file_type" Type="Int32" Nullable="false" />
+          <Property Name="owner_id" Type="Int32" />
+          <Property Name="file_status_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="property_no" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="property_size" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="location_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="landuse_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="landpurpose_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="recordation" Type="DateTime" Precision="6" Nullable="false" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="leaseyear_code" Type="Int32" />
+          <Property Name="rofo_exists" Type="Boolean" />
+          <Property Name="cofo_exists" Type="Boolean" />
+          <Property Name="modified_by" Type="Int32" Nullable="false" />
+          <Property Name="allocation_status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="transaction_status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="other_claimants_code" Type="Int32" />
+          <Property Name="file_number_only" Type="Int32" />
+          <NavigationProperty Name="allocation_status1" Relationship="Self.file_allocation_status_fkey" FromRole="file" ToRole="allocation_status" />
+          <NavigationProperty Name="allocation_status2" Relationship="Self.file_transaction_status_fkey" FromRole="file" ToRole="allocation_status" />
+          <NavigationProperty Name="appuser" Relationship="Self.file_modified_by_fkey" FromRole="file" ToRole="appuser" />
+          <NavigationProperty Name="file_status" Relationship="Self.file_file_status_code_fkey" FromRole="file" ToRole="file_status" />
+          <NavigationProperty Name="file_type1" Relationship="Self.file_file_type_fkey" FromRole="file" ToRole="file_type" />
+          <NavigationProperty Name="party" Relationship="Self.file_owner_id_fkey" FromRole="file" ToRole="party" />
+        </EntityType>
+        <EntityType Name="file_status">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="files" Relationship="Self.file_file_status_code_fkey" FromRole="file_status" ToRole="file" />
+        </EntityType>
+        <EntityType Name="file_type">
+          <Key>
+            <PropertyRef Name="file_type_id" />
+          </Key>
+          <Property Name="file_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="file_type_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="file_classification_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="min_number" Type="Int32" />
+          <Property Name="max_number" Type="Int32" />
+          <Property Name="auto_generated" Type="Boolean" Nullable="false" />
+          <Property Name="current_number" Type="Int32" />
+          <Property Name="number_format" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="min_size" Type="Int32" Nullable="false" />
+          <Property Name="certificate_code" Type="Int32" />
+          <NavigationProperty Name="files" Relationship="Self.file_file_type_fkey" FromRole="file_type" ToRole="file" />
+          <NavigationProperty Name="lkp_file_classification" Relationship="Self.file_type_file_classification_code_fkey" FromRole="file_type" ToRole="lkp_file_classification" />
+        </EntityType>
+        <EntityType Name="lkp_file_classification">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="file_type" Relationship="Self.file_type_file_classification_code_fkey" FromRole="lkp_file_classification" ToRole="file_type" />
+        </EntityType>
+        <EntityType Name="lkp_state">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="location_type_upper" Relationship="Self.location_type_upper_state_fkey" FromRole="lkp_state" ToRole="location_type_upper" />
+        </EntityType>
+        <EntityType Name="location_type_upper">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ftms_file" Relationship="Self.ftms_file_lga_code_fkey" FromRole="location_type_upper" ToRole="ftms_file" />
+          <NavigationProperty Name="lkp_state" Relationship="Self.location_type_upper_state_fkey" FromRole="location_type_upper" ToRole="lkp_state" />
+        </EntityType>
+        <EntityType Name="logger">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="createdate" Type="DateTime" Precision="6" />
+          <Property Name="machinename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="message" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="category" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="party">
+          <Key>
+            <PropertyRef Name="party_id" />
+          </Key>
+          <Property Name="party_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="files" Relationship="Self.file_owner_id_fkey" FromRole="party" ToRole="file" />
+        </EntityType>
+        <EntityType Name="setting">
+          <Key>
+            <PropertyRef Name="mr_code" />
+          </Key>
+          <Property Name="mr_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="ftms_census_file_id_fkey">
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="1" />
+          <End Role="ftms_census" Type="Self.ftms_census" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_file">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ftms_census">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_census_location_code_fkey">
+          <End Role="ftms_locations" Type="Self.ftms_locations" Multiplicity="1" />
+          <End Role="ftms_census" Type="Self.ftms_census" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_locations">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="ftms_census">
+              <PropertyRef Name="location_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_file_current_transaction_fkey">
+          <End Role="ftms_transaction" Type="Self.ftms_transaction" Multiplicity="0..1" />
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_transaction">
+              <PropertyRef Name="transaction_id" />
+            </Principal>
+            <Dependent Role="ftms_file">
+              <PropertyRef Name="current_transaction" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_file_lga_code_fkey">
+          <End Role="location_type_upper" Type="Self.location_type_upper" Multiplicity="0..1" />
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location_type_upper">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="ftms_file">
+              <PropertyRef Name="lga_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_sticker_file_id_fkey">
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="1" />
+          <End Role="ftms_sticker" Type="Self.ftms_sticker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_file">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ftms_sticker">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_transaction_file_id_fkey">
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="1" />
+          <End Role="ftms_transaction" Type="Self.ftms_transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_file">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="ftms_transaction">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_details_file_id_fkey">
+          <End Role="ftms_file" Type="Self.ftms_file" Multiplicity="1" />
+          <End Role="request_details" Type="Self.request_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_file">
+              <PropertyRef Name="file_id" />
+            </Principal>
+            <Dependent Role="request_details">
+              <PropertyRef Name="file_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_details_request_id_fkey">
+          <End Role="ftms_file_request" Type="Self.ftms_file_request" Multiplicity="1" />
+          <End Role="request_details" Type="Self.request_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_file_request">
+              <PropertyRef Name="request_id" />
+            </Principal>
+            <Dependent Role="request_details">
+              <PropertyRef Name="request_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_transaction_from_location_fkey">
+          <End Role="ftms_locations" Type="Self.ftms_locations" Multiplicity="1" />
+          <End Role="ftms_transaction" Type="Self.ftms_transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_locations">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="ftms_transaction">
+              <PropertyRef Name="from_location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_transaction_to_location_fkey">
+          <End Role="ftms_locations" Type="Self.ftms_locations" Multiplicity="1" />
+          <End Role="ftms_transaction" Type="Self.ftms_transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ftms_locations">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="ftms_transaction">
+              <PropertyRef Name="to_location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ftms_transaction_file_condition_fkey">
+          <End Role="lkp_file_condition" Type="Self.lkp_file_condition" Multiplicity="1" />
+          <End Role="ftms_transaction" Type="Self.ftms_transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lkp_file_condition">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="ftms_transaction">
+              <PropertyRef Name="file_condition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_allocation_status_fkey">
+          <End Role="allocation_status" Type="Self.allocation_status" Multiplicity="0..1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="allocation_status">
+              <PropertyRef Name="mrcode" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="allocation_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_transaction_status_fkey">
+          <End Role="allocation_status" Type="Self.allocation_status" Multiplicity="0..1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="allocation_status">
+              <PropertyRef Name="mrcode" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="transaction_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="appuser_created_by_fkey">
+          <End Role="appuser" Type="Self.appuser" Multiplicity="0..1" />
+          <End Role="appuser1" Type="Self.appuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="appuser">
+              <PropertyRef Name="appuser_id" />
+            </Principal>
+            <Dependent Role="appuser1">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="appuser_modified_by_fkey">
+          <End Role="appuser" Type="Self.appuser" Multiplicity="0..1" />
+          <End Role="appuser1" Type="Self.appuser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="appuser">
+              <PropertyRef Name="appuser_id" />
+            </Principal>
+            <Dependent Role="appuser1">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_modified_by_fkey">
+          <End Role="appuser" Type="Self.appuser" Multiplicity="1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="appuser">
+              <PropertyRef Name="appuser_id" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="modified_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_file_status_code_fkey">
+          <End Role="file_status" Type="Self.file_status" Multiplicity="1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="file_status">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="file_status_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_file_type_fkey">
+          <End Role="file_type" Type="Self.file_type" Multiplicity="1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="file_type">
+              <PropertyRef Name="file_type_id" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="file_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_owner_id_fkey">
+          <End Role="party" Type="Self.party" Multiplicity="0..1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="party">
+              <PropertyRef Name="party_id" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="file_type_file_classification_code_fkey">
+          <End Role="lkp_file_classification" Type="Self.lkp_file_classification" Multiplicity="1" />
+          <End Role="file_type" Type="Self.file_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lkp_file_classification">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="file_type">
+              <PropertyRef Name="file_classification_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="location_type_upper_state_fkey">
+          <End Role="lkp_state" Type="Self.lkp_state" Multiplicity="1" />
+          <End Role="location_type_upper" Type="Self.location_type_upper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lkp_state">
+              <PropertyRef Name="mr_code" />
+            </Principal>
+            <Dependent Role="location_type_upper">
+              <PropertyRef Name="state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ftmsdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ftms_census" EntityType="Self.ftms_census" />
+          <EntitySet Name="ftms_file" EntityType="Self.ftms_file" />
+          <EntitySet Name="ftms_file_request" EntityType="Self.ftms_file_request" />
+          <EntitySet Name="ftms_locations" EntityType="Self.ftms_locations" />
+          <EntitySet Name="ftms_setting" EntityType="Self.ftms_setting" />
+          <EntitySet Name="ftms_sticker" EntityType="Self.ftms_sticker" />
+          <EntitySet Name="ftms_transaction" EntityType="Self.ftms_transaction" />
+          <EntitySet Name="lkp_file_condition" EntityType="Self.lkp_file_condition" />
+          <EntitySet Name="request_details" EntityType="Self.request_details" />
+          <EntitySet Name="allocation_status" EntityType="Self.allocation_status" />
+          <EntitySet Name="appusers" EntityType="Self.appuser" />
+          <EntitySet Name="files" EntityType="Self.file" />
+          <EntitySet Name="file_status" EntityType="Self.file_status" />
+          <EntitySet Name="file_type" EntityType="Self.file_type" />
+          <EntitySet Name="lkp_file_classification" EntityType="Self.lkp_file_classification" />
+          <EntitySet Name="lkp_state" EntityType="Self.lkp_state" />
+          <EntitySet Name="location_type_upper" EntityType="Self.location_type_upper" />
+          <EntitySet Name="loggers" EntityType="Self.logger" />
+          <EntitySet Name="parties" EntityType="Self.party" />
+          <EntitySet Name="settings" EntityType="Self.setting" />
+          <AssociationSet Name="ftms_census_file_id_fkey" Association="Self.ftms_census_file_id_fkey">
+            <End Role="ftms_file" EntitySet="ftms_file" />
+            <End Role="ftms_census" EntitySet="ftms_census" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_census_location_code_fkey" Association="Self.ftms_census_location_code_fkey">
+            <End Role="ftms_locations" EntitySet="ftms_locations" />
+            <End Role="ftms_census" EntitySet="ftms_census" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_file_current_transaction_fkey" Association="Self.ftms_file_current_transaction_fkey">
+            <End Role="ftms_transaction" EntitySet="ftms_transaction" />
+            <End Role="ftms_file" EntitySet="ftms_file" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_file_lga_code_fkey" Association="Self.ftms_file_lga_code_fkey">
+            <End Role="location_type_upper" EntitySet="location_type_upper" />
+            <End Role="ftms_file" EntitySet="ftms_file" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_sticker_file_id_fkey" Association="Self.ftms_sticker_file_id_fkey">
+            <End Role="ftms_file" EntitySet="ftms_file" />
+            <End Role="ftms_sticker" EntitySet="ftms_sticker" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_transaction_file_id_fkey" Association="Self.ftms_transaction_file_id_fkey">
+            <End Role="ftms_file" EntitySet="ftms_file" />
+            <End Role="ftms_transaction" EntitySet="ftms_transaction" />
+          </AssociationSet>
+          <AssociationSet Name="request_details_file_id_fkey" Association="Self.request_details_file_id_fkey">
+            <End Role="ftms_file" EntitySet="ftms_file" />
+            <End Role="request_details" EntitySet="request_details" />
+          </AssociationSet>
+          <AssociationSet Name="request_details_request_id_fkey" Association="Self.request_details_request_id_fkey">
+            <End Role="ftms_file_request" EntitySet="ftms_file_request" />
+            <End Role="request_details" EntitySet="request_details" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_transaction_from_location_fkey" Association="Self.ftms_transaction_from_location_fkey">
+            <End Role="ftms_locations" EntitySet="ftms_locations" />
+            <End Role="ftms_transaction" EntitySet="ftms_transaction" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_transaction_to_location_fkey" Association="Self.ftms_transaction_to_location_fkey">
+            <End Role="ftms_locations" EntitySet="ftms_locations" />
+            <End Role="ftms_transaction" EntitySet="ftms_transaction" />
+          </AssociationSet>
+          <AssociationSet Name="ftms_transaction_file_condition_fkey" Association="Self.ftms_transaction_file_condition_fkey">
+            <End Role="lkp_file_condition" EntitySet="lkp_file_condition" />
+            <End Role="ftms_transaction" EntitySet="ftms_transaction" />
+          </AssociationSet>
+          <AssociationSet Name="file_allocation_status_fkey" Association="Self.file_allocation_status_fkey">
+            <End Role="allocation_status" EntitySet="allocation_status" />
+            <End Role="file" EntitySet="files" />
+          </AssociationSet>
+          <AssociationSet Name="file_transaction_status_fkey" Association="Self.file_transaction_status_fkey">
+            <End Role="allocation_status" EntitySet="allocation_status" />
+            <End Role="file" EntitySet="files" />
+          </AssociationSet>
+          <AssociationSet Name="appuser_created_by_fkey" Association="Self.appuser_created_by_fkey">
+            <End Role="appuser" EntitySet="appusers" />
+            <End Role="appuser1" EntitySet="appusers" />
+          </AssociationSet>
+          <AssociationSet Name="appuser_modified_by_fkey" Association="Self.appuser_modified_by_fkey">
+            <End Role="appuser" EntitySet="appusers" />
+            <End Role="appuser1" EntitySet="appusers" />
+          </AssociationSet>
+          <AssociationSet Name="file_modified_by_fkey" Association="Self.file_modified_by_fkey">
+            <End Role="appuser" EntitySet="appusers" />
+            <End Role="file" EntitySet="files" />
+          </AssociationSet>
+          <AssociationSet Name="file_file_status_code_fkey" Association="Self.file_file_status_code_fkey">
+            <End Role="file_status" EntitySet="file_status" />
+            <End Role="file" EntitySet="files" />
+          </AssociationSet>
+          <AssociationSet Name="file_file_type_fkey" Association="Self.file_file_type_fkey">
+            <End Role="file_type" EntitySet="file_type" />
+            <End Role="file" EntitySet="files" />
+          </AssociationSet>
+          <AssociationSet Name="file_owner_id_fkey" Association="Self.file_owner_id_fkey">
+            <End Role="party" EntitySet="parties" />
+            <End Role="file" EntitySet="files" />
+          </AssociationSet>
+          <AssociationSet Name="file_type_file_classification_code_fkey" Association="Self.file_type_file_classification_code_fkey">
+            <End Role="lkp_file_classification" EntitySet="lkp_file_classification" />
+            <End Role="file_type" EntitySet="file_type" />
+          </AssociationSet>
+          <AssociationSet Name="location_type_upper_state_fkey" Association="Self.location_type_upper_state_fkey">
+            <End Role="lkp_state" EntitySet="lkp_state" />
+            <End Role="location_type_upper" EntitySet="location_type_upper" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ftmsdbModelStoreContainer" CdmEntityContainer="ftmsdbEntities">
+          <EntitySetMapping Name="ftms_census">
+            <EntityTypeMapping TypeName="ftmsdbModel.ftms_census">
+              <MappingFragment StoreEntitySet="ftms_census">
+                <ScalarProperty Name="census_id" ColumnName="census_id" />
+                <ScalarProperty Name="census_date" ColumnName="census_date" />
+                <ScalarProperty Name="location_code" ColumnName="location_code" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="logged_user" ColumnName="logged_user" />
+                <ScalarProperty Name="pc_name" ColumnName="pc_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ftms_file">
+            <EntityTypeMapping TypeName="ftmsdbModel.ftms_file">
+              <MappingFragment StoreEntitySet="ftms_file">
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="file_number" ColumnName="file_number" />
+                <ScalarProperty Name="owner_name" ColumnName="owner_name" />
+                <ScalarProperty Name="cofo_exist" ColumnName="cofo_exist" />
+                <ScalarProperty Name="rofo_exist" ColumnName="rofo_exist" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="app_date" ColumnName="app_date" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="register_number" ColumnName="register_number" />
+                <ScalarProperty Name="rofo_date" ColumnName="rofo_date" />
+                <ScalarProperty Name="commencement_date" ColumnName="commencement_date" />
+                <ScalarProperty Name="file_alias" ColumnName="file_alias" />
+                <ScalarProperty Name="lga_code" ColumnName="lga_code" />
+                <ScalarProperty Name="rack_number" ColumnName="rack_number" />
+                <ScalarProperty Name="current_transaction" ColumnName="current_transaction" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ftms_file_request">
+            <EntityTypeMapping TypeName="ftmsdbModel.ftms_file_request">
+              <MappingFragment StoreEntitySet="ftms_file_request">
+                <ScalarProperty Name="request_id" ColumnName="request_id" />
+                <ScalarProperty Name="requestor_name" ColumnName="requestor_name" />
+                <ScalarProperty Name="request_purpose" ColumnName="request_purpose" />
+                <ScalarProperty Name="request_date" ColumnName="request_date" />
+                <ScalarProperty Name="requestor_pcname" ColumnName="requestor_pcname" />
+                <ScalarProperty Name="requestor_logged_user" ColumnName="requestor_logged_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ftms_locations">
+            <EntityTypeMapping TypeName="ftmsdbModel.ftms_locations">
+              <MappingFragment StoreEntitySet="ftms_locations">
+                <ScalarProperty Name="mr_code" ColumnName="mr_code" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="positions" ColumnName="positions" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ftms_setting">
+            <EntityTypeMapping TypeName="ftmsdbModel.ftms_setting">
+              <MappingFragment StoreEntitySet="ftms_setting">
+                <ScalarProperty Name="mr_code" ColumnName="mr_code" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ftms_sticker">
+            <EntityTypeMapping TypeName="ftmsdbModel.ftms_sticker">
+              <MappingFragment StoreEntitySet="ftms_sticker">
+                <ScalarProperty Name="sticker_id" ColumnName="sticker_id" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="qr_full_text" ColumnName="qr_full_text" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="logged_user" ColumnName="logged_user" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ftms_transaction">
+            <EntityTypeMapping TypeName="ftmsdbModel.ftms_transaction">
+              <MappingFragment StoreEntitySet="ftms_transaction">
+                <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="from_location" ColumnName="from_location" />
+                <ScalarProperty Name="to_location" ColumnName="to_location" />
+                <ScalarProperty Name="transaction_date" ColumnName="transaction_date" />
+                <ScalarProperty Name="file_condition" ColumnName="file_condition" />
+                <ScalarProperty Name="number_page" ColumnName="number_page" />
+                <ScalarProperty Name="logged_user" ColumnName="logged_user" />
+                <ScalarProperty Name="pc_name" ColumnName="pc_name" />
+                <ScalarProperty Name="tracking_remark" ColumnName="tracking_remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lkp_file_condition">
+            <EntityTypeMapping TypeName="ftmsdbModel.lkp_file_condition">
+              <MappingFragment StoreEntitySet="lkp_file_condition">
+                <ScalarProperty Name="mr_code" ColumnName="mr_code" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="positions" ColumnName="positions" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="request_details">
+            <EntityTypeMapping TypeName="ftmsdbModel.request_details">
+              <MappingFragment StoreEntitySet="request_details">
+                <ScalarProperty Name="request_id" ColumnName="request_id" />
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="allocation_status">
+            <EntityTypeMapping TypeName="ftmsdbModel.allocation_status">
+              <MappingFragment StoreEntitySet="allocation_status">
+                <ScalarProperty Name="mrcode" ColumnName="mrcode" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="request_category_type" ColumnName="request_category_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="appusers">
+            <EntityTypeMapping TypeName="ftmsdbModel.appuser">
+              <MappingFragment StoreEntitySet="appuser">
+                <ScalarProperty Name="appuser_id" ColumnName="appuser_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="files">
+            <EntityTypeMapping TypeName="ftmsdbModel.file">
+              <MappingFragment StoreEntitySet="file">
+                <ScalarProperty Name="file_id" ColumnName="file_id" />
+                <ScalarProperty Name="file_number" ColumnName="file_number" />
+                <ScalarProperty Name="auto_generated" ColumnName="auto_generated" />
+                <ScalarProperty Name="file_alias" ColumnName="file_alias" />
+                <ScalarProperty Name="file_type" ColumnName="file_type" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="file_status_code" ColumnName="file_status_code" />
+                <ScalarProperty Name="property_no" ColumnName="property_no" />
+                <ScalarProperty Name="property_size" ColumnName="property_size" />
+                <ScalarProperty Name="location_code" ColumnName="location_code" />
+                <ScalarProperty Name="landuse_code" ColumnName="landuse_code" />
+                <ScalarProperty Name="landpurpose_code" ColumnName="landpurpose_code" />
+                <ScalarProperty Name="recordation" ColumnName="recordation" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="leaseyear_code" ColumnName="leaseyear_code" />
+                <ScalarProperty Name="rofo_exists" ColumnName="rofo_exists" />
+                <ScalarProperty Name="cofo_exists" ColumnName="cofo_exists" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="allocation_status" ColumnName="allocation_status" />
+                <ScalarProperty Name="transaction_status" ColumnName="transaction_status" />
+                <ScalarProperty Name="other_claimants_code" ColumnName="other_claimants_code" />
+                <ScalarProperty Name="file_number_only" ColumnName="file_number_only" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="file_status">
+            <EntityTypeMapping TypeName="ftmsdbModel.file_status">
+              <MappingFragment StoreEntitySet="file_status">
+                <ScalarProperty Name="mr_code" ColumnName="mr_code" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="file_type">
+            <EntityTypeMapping TypeName="ftmsdbModel.file_type">
+              <MappingFragment StoreEntitySet="file_type">
+                <ScalarProperty Name="file_type_id" ColumnName="file_type_id" />
+                <ScalarProperty Name="file_type_code" ColumnName="file_type_code" />
+                <ScalarProperty Name="file_classification_code" ColumnName="file_classification_code" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="min_number" ColumnName="min_number" />
+                <ScalarProperty Name="max_number" ColumnName="max_number" />
+                <ScalarProperty Name="auto_generated" ColumnName="auto_generated" />
+                <ScalarProperty Name="current_number" ColumnName="current_number" />
+                <ScalarProperty Name="number_format" ColumnName="number_format" />
+                <ScalarProperty Name="min_size" ColumnName="min_size" />
+                <ScalarProperty Name="certificate_code" ColumnName="certificate_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lkp_file_classification">
+            <EntityTypeMapping TypeName="ftmsdbModel.lkp_file_classification">
+              <MappingFragment StoreEntitySet="lkp_file_classification">
+                <ScalarProperty Name="mr_code" ColumnName="mr_code" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lkp_state">
+            <EntityTypeMapping TypeName="ftmsdbModel.lkp_state">
+              <MappingFragment StoreEntitySet="lkp_state">
+                <ScalarProperty Name="mr_code" ColumnName="mr_code" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="location_type_upper">
+            <EntityTypeMapping TypeName="ftmsdbModel.location_type_upper">
+              <MappingFragment StoreEntitySet="location_type_upper">
+                <ScalarProperty Name="mr_code" ColumnName="mr_code" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="loggers">
+            <EntityTypeMapping TypeName="ftmsdbModel.logger">
+              <MappingFragment StoreEntitySet="logger">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="createdate" ColumnName="createdate" />
+                <ScalarProperty Name="machinename" ColumnName="machinename" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="category" ColumnName="category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="parties">
+            <EntityTypeMapping TypeName="ftmsdbModel.party">
+              <MappingFragment StoreEntitySet="party">
+                <ScalarProperty Name="party_id" ColumnName="party_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="settings">
+            <EntityTypeMapping TypeName="ftmsdbModel.setting">
+              <MappingFragment StoreEntitySet="setting">
+                <ScalarProperty Name="mr_code" ColumnName="mr_code" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c2273b19348c45e2967884c0cc0dbaab" Name="Diagram1" ZoomLevel="36">
+        <EntityTypeShape EntityType="ftmsdbModel.ftms_census" Width="1.5" PointX="8" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.ftms_file" Width="1.5" PointX="13.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.ftms_file_request" Width="1.5" PointX="13.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.ftms_locations" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.ftms_setting" Width="1.5" PointX="5.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.ftms_sticker" Width="1.5" PointX="15.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.ftms_transaction" Width="1.5" PointX="11" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.lkp_file_condition" Width="1.5" PointX="8.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.request_details" Width="1.5" PointX="15.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.allocation_status" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.appuser" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.file" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.file_status" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.file_type" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.lkp_file_classification" Width="1.5" PointX="1.5" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.lkp_state" Width="1.5" PointX="8.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.location_type_upper" Width="1.5" PointX="11" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.logger" Width="1.5" PointX="2.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.party" Width="1.5" PointX="0.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ftmsdbModel.setting" Width="1.5" PointX="4.75" PointY="9.875" IsExpanded="true" />
+        <AssociationConnector Association="ftmsdbModel.ftms_census_file_id_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.ftms_census_location_code_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.ftms_file_current_transaction_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.ftms_file_lga_code_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.ftms_sticker_file_id_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.ftms_transaction_file_id_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.request_details_file_id_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.request_details_request_id_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.ftms_transaction_from_location_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.ftms_transaction_to_location_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.ftms_transaction_file_condition_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.file_allocation_status_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.file_transaction_status_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.appuser_created_by_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.appuser_modified_by_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.file_modified_by_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.file_file_status_code_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.file_file_type_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.file_owner_id_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.file_type_file_classification_code_fkey" ManuallyRouted="false" />
+        <AssociationConnector Association="ftmsdbModel.location_type_upper_state_fkey" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
